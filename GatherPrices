@@ -1,0 +1,21 @@
+isntal WebScraping tool Beautiful Soup by runing the below into the CMD
+"pip3 install beautifulsoup4"
+
+#import Webscraping tool
+from bs4 import BeautifulSoup
+
+#fetch HTML content of the website
+import requests
+url = "https://www.continente.pt/pesquisa/?q=frango&start=0&srule=Continente%2008&pmin=0.01"
+response = requests.get(url)
+
+#create BeautifulSoup Object / Parse HTML
+soup = BeautifulSoup(response.content, "html.parser")
+
+#Find all the results in the url that contains the word "Frango"
+links = soup.find_all("a")
+for link in links:
+    if "Frango" in link.text:
+        text = link.text.strip()  # Get the text and remove extra spaces
+        href = link.get("href")    # Get the value of the href attribute
+        print(f"Text: {text}, Href: {href}")
